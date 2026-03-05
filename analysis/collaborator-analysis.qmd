@@ -12,9 +12,34 @@ library(tidyr)
 library(here)
 ```
 
-read in the data 
+###read in the data 
 
 ```{r}
 lobster_traps <- read_csv(here("data/Lobster_Trap_Counts_All_Years_20210519.csv"))
+```
+
+```{r}
+# change -99999 to na
+lobster_traps <- lobster_traps %>% 
+  mutate(TRAPS = na_if(TRAPS,-99999))
+```
+
+```{r}
+#filter by NAPL
+lobster_traps_noNAPL<- lobster_traps %>% 
+  filter(SITE != "NAPL")
+
+#CARP and commercial trap floats greater than 20
+lobster_traps_CARPover20 <- lobster_traps %>% 
+  filter(SITE == "CARP", TRAPS > 20)
+
+#max number of traps
+max(lobster_traps$TRAPS, na.rm = TRUE)
+
+#create a df showing max traps by site and month
+lobster_traps_max <- lobster_traps %>% 
+  group_by(SITE, MONTH) %>% 
+  summarize(max_traps = max(TRAPS, na.rm = TRUE))
+
 ```
 
