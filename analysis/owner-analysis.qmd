@@ -18,5 +18,43 @@ read in lobster abundance data
 
 ```{r}
 lobster_abundance <- read_csv(here("data/Lobster_Abundance_All_Years_20220829.csv"))
+
+head(lobster_abundance)
 ```
+convert -99999.0 to nas
+
+```{r}
+lobster_abundance %>% 
+  mutate(SIZE_MM = na_if(SIZE_MM, -99999))
+
+```
+Create and store a subset that does NOT include observations from Naples Reef (NAPL). Check your output data frame to ensure that NAPL is NOT in the data frame.
+
+```{r}
+lobster_abundance %>% 
+  filter(SITE != "NAPL")
+```
+
+Create and store a subset with lobsters at Arroyo Quemado (AQUE) AND with a carapace length greater than 70 mm. Check your output.
+
+```{r}
+aque_long <- lobster_abundance %>% 
+  filter(SITE == "AQUE") %>% 
+  filter(SIZE_MM > 70)
+
+head(aque_long)
+```
+
+Find the maximum carapace length using max() and group by SITE and MONTH. Think about how you want to treat the NA values in SIZE_MM (Hint: check the arguments in max()). Check your output.
+
+```{r}
+max_carapace <- lobster_abundance %>% 
+  group_by(SITE, MONTH) %>% 
+  summarize(max_length = max(SIZE_MM))
+
+max_carapace
+```
+
+
+
 
