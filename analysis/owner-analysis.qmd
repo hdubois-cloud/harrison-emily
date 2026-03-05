@@ -1,5 +1,22 @@
 ---
 title: "owner-analysis"
 format: html
+author: harrison
 ---
+
+## Exercise: explore, clean, and wrangle data
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(here)
+```
+
+read in lobster abundance data 
+
+```{r}
+lobster_abundance <- read_csv(here("data/Lobster_Abundance_All_Years_20220829.csv"))
+```
 
